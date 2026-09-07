@@ -1,0 +1,3 @@
+"""
+Catalog application package.
+"""

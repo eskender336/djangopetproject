@@ -1,0 +1,18 @@
+Django>=5.0,<5.2
+djangorestframework>=3.15.0,<3.16.0
+djangorestframework-simplejwt>=5.3.1
+django-filter>=24.2
+django-cors-headers>=4.3.1
+psycopg2-binary>=2.9.9
+celery>=5.4.0
+redis>=5.0.4
+drf-spectacular>=0.27.2
+
+# Testing & Quality
+pytest>=8.2.0
+pytest-django>=4.8.0
+factory-boy>=3.3.0
+faker>=25.0.0
+ruff>=0.4.4
+python-dotenv>=1.0.1
+gunicorn>=22.0.0
