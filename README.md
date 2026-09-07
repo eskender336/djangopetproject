@@ -62,17 +62,17 @@ flowchart TB
     end
 
     subgraph Storage["Уровень постоянного хранения (Data Layer)"]
-        Postgres[(PostgreSQL 16\nPrimary Database\nRow-Level Locking / B-Tree Indexes)]
+        Postgres[("PostgreSQL 16<br/>Primary Database<br/>Row-Level Locking / B-Tree Indexes")]
     end
 
     subgraph CacheAndBroker["Кэш и Брокер сообщений"]
-        RedisCache[("Redis 7 (DB 1)\nCatalog Cache & Signals Invalidation")]
-        RedisBroker[("Redis 7 (DB 0)\nCelery Message Broker & Result Backend")]
+        RedisCache[("Redis 7 DB 1<br/>Catalog Cache & Signals Invalidation")]
+        RedisBroker[("Redis 7 DB 0<br/>Celery Message Broker & Result Backend")]
     end
 
     subgraph DistributedWorkers["Распределенные фоновые воркеры"]
-        CeleryWorker["Celery Worker Nodes\n- Order Confirmation Email\n- Receipt & PDF Generation"]
-        CeleryBeat["Celery Beat Scheduler\n- Cancel Expired Unpaid Orders (Every 5m)"]
+        CeleryWorker["Celery Worker Nodes<br/>- Order Confirmation Email<br/>- Receipt & PDF Generation"]
+        CeleryBeat["Celery Beat Scheduler<br/>- Cancel Expired Unpaid Orders (Every 5m)"]
     end
 
     SPA -->|HTTP/REST| Nginx
@@ -89,9 +89,9 @@ flowchart TB
 
     AuthView --> Postgres
     OrderView -->|SELECT FOR UPDATE / Atomic Commit| Postgres
-    AsyncWebhook -->|Native Async ORM (afirst, asave)| Postgres
+    AsyncWebhook -->|Native Async ORM: afirst, asave| Postgres
 
-    OrderView -.->|transaction.on_commit(delay)| RedisBroker
+    OrderView -.->|transaction.on_commit with delay| RedisBroker
     CeleryBeat -.->|Schedule Periodic Tasks| RedisBroker
     RedisBroker -->|Consume Tasks| CeleryWorker
     CeleryWorker -->|Update Status / Read Data| Postgres
